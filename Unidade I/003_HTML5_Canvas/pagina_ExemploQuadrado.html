@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<title>Oi Mundo - Canvas HTML 5</title>
+	</head>
+	<body>	
+		Esse é o elemento canvas: <br \><br \>
+		<canvas id="canvas" width="400" height="300" style="border:1px solid #000000;">
+		</canvas>
+		
+		<script>
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext("2d");
+		ctx.fillStyle = 'green';
+		ctx.fillRect(10, 10, 150, 100);
+		</script>
+	</body>
+</html>

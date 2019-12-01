@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport"/>
+<style>
+canvas {
+    border:1px solid #FFFFFF;
+    background-color: #FFFFFF;
+}
+</style>
+</head>
+<body onload="desenharCenario()">
+<canvas id="canvas" width="480" height="270">
+<script>
+
+var mapa = [ [ 0, 0, 0, 0, 0, 0, 0, 1 ],
+			 [ 0, 0, 1, 0, 1, 0, 1, 1 ],
+			 [ 0, 0, 1, 0, 1, 0, 1, 2 ],
+             [ 1, 0, 1, 0, 1, 0, 1, 0 ],
+			 [ 0, 0, 0, 0, 1, 0, 0, 0 ],
+			 [ 0, 0, 1, 1, 0, 1, 0, 1 ],
+			 [ 0, 0, 0, 0, 0, 1, 0, 1 ],
+			 [ 1, 1, 1, 1, 1, 1, 0, 1 ] ];
+			 
+var jogador = {
+	linha : 6,
+	coluna : 1
+};
+
+var areaJogo = {
+    canvas : document.getElementById('canvas'),
+	contexto : this.canvas.getContext("2d")
+}
+
+var tile = {
+    largura : 30,
+    altura : 30,
+
+	desenhar : function (cor, linha, coluna) {
+		x = coluna * this.largura;
+		y = linha * this.altura; 
+	
+		ctx = areaJogo.contexto;
+		ctx.fillStyle = nomeCor(cor);
+		ctx.fillRect(x, y, this.largura, this.altura);
+	}    
+};
+
+function desenharCenario() {
+  for (var linha = 0; linha <= 7; linha++) 
+		for (var coluna = 0; coluna <= 7; coluna++) {
+			if (this.jogador.linha == linha && this.jogador.coluna == coluna)
+				tile.desenhar(3, linha, coluna); // vermelho, que é a cor do jogador
+			else
+				tile.desenhar(mapa[linha][coluna], linha, coluna);	 // imprime o tile que tiver no mapa
+		}
+}
+
+function atualizarJogador(direcao) {
+
+	var linhaAnterior = this.jogador.linha;
+	var colunaAnterior = this.jogador.coluna;
+
+	if (direcao == 'CIMA' && this.jogador.linha != 0)
+		this.jogador.linha = this.jogador.linha - 1;
+		
+	else if (direcao == 'BAIXO' &&  this.jogador.linha != 7)
+		this.jogador.linha = this.jogador.linha + 1;
+		
+	else if (direcao == 'ESQUERDA' && this.jogador.coluna != 0)
+		this.jogador.coluna = this.jogador.coluna - 1;
+		
+	else if (direcao == 'DIREITA' && this.jogador.coluna != 7)
+		this.jogador.coluna = this.jogador.coluna + 1;
+		
+	
+	if (mapa[this.jogador.linha][this.jogador.coluna] == 2) {
+		alert('Parabéns! Você encontrou a saída');
+	}
+	else if (mapa[this.jogador.linha][this.jogador.coluna] != 0) {
+		this.jogador.linha = linhaAnterior;
+		this.jogador.coluna = colunaAnterior;
+	}
+}	
+
+function nomeCor(cor) {
+
+  switch (cor) {
+    case 1:
+      return "green";
+    case 2: 
+      return "blue";
+    case 3:
+      return "red";
+    default:
+      return "cyan";
+  };
+  
+}
+
+function pressionarTecla(evento) {
+  var tecla = evento.keyCode;
+  
+  if (tecla === 37 || tecla === 38 || tecla === 39 || tecla === 40) {
+    evento.preventDefault();
+  }
+    
+  switch (tecla) {
+    case 37:
+      atualizarJogador('ESQUERDA');
+      break;
+    case 38: 
+      atualizarJogador('CIMA');
+      break;
+    case 39:
+      atualizarJogador('DIREITA');
+      break;
+    case 40:
+      atualizarJogador('BAIXO');
+      break;
+    default:
+      break;
+  };
+  
+  desenharCenario();
+}
+
+document.addEventListener('keydown', pressionarTecla);
+
+</script>
+
+</body>
+</html>
