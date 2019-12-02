@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport"/>
+<style>
+canvas {
+    border:1px solid #FFFFFF;
+    background-color: #FFFFFF;
+	
+}
+</style>
+</head>
+<body onload="iniciarJogo()">
+
+<script>
+
+// [EDITAR] Tile Map: Matriz 3x7
+// 0 - Cyano; 37 - Azul; 38 - VERMELHO; 39 - AZUL; 40 - PRETO	
+var tilesMap = [ [ xxxx, xxxx, xxxx, xxxx, xxxx, xxxx, xxxx ],
+				 [ xxxx, xxxx, xxxx, xxxx, xxxx, xxxx, xxxx ],
+				 [ xxxx, xxxx, xxxx, xxxx, xxxx, xxxx, xxxx ]];
+
+numJogada = 0;	
+
+// [EDITAR] Colocar aqui a resposta da sequencia de cores
+var resposta = [ xxxx, xxxx, xxxx, xxxx, xxxx ];
+
+var tile = {
+    width : 30,
+    height : 30,
+
+	desenhar : function (color, x, y) {
+		r = y * this.width;
+		c = x * this.height; 
+	
+		ctx = areaJogo.context;
+		ctx.fillStyle = getColor(color);
+		ctx.fillRect(r, c, this.width, this.height);
+	}    
+};
+
+function iniciarJogo() {
+    areaJogo.start();
+	draw(true);
+	setTimeout(function(){ draw(false); }, 3.0 * 1000);
+}
+
+var areaJogo = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 300;
+        this.canvas.height = 110;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    }
+}
+
+
+function draw(flag) {
+
+  for (var r = 0; r < 3; r++) 
+		for (var c = 0; c < 7; c++) {
+			if (flag) // [EDITAR] Se a flag for verdadeira, desenhar o que está específicado no mapa (mapa, linha, coluna)
+				tile.desenhar(xxxxxx, xxxxxx, xxxxxx);	
+			else // [EDITAR] Senão, desenhar quadrado vermelho (vermelho, linha, coluna)
+				tile.desenhar(xxxxxx, xxxxxx, xxxxxx);
+		}
+}	
+
+function getColor(color) {
+
+	switch (color) {
+		case 37:
+			return "green";
+		case 39: 
+			return "blue";
+		case 38:
+			return "red";
+		case 40:
+			return "black";
+	}
+		
+	return "cyan";
+}
+
+function handleKeyPress(event) {
+  let key = event.keyCode;
+
+  if (key === 37 || key === 38 || key === 39 || key === 40) {
+    event.preventDefault();
+  }
+  
+  atualizarJogada(key);
+}
+
+function atualizarJogada(jog) {
+
+	// Verificar se o usuário errou um elemento da sequencia
+	if (resposta[numJogada] != jog) {
+		
+		numJogada = 0;
+		draw(true);
+		setTimeout(function(){ draw(false); }, 3.0 * 1000);
+		return;
+	}
+	
+	// [EDITAR] Adicionar 1 na variável relacionado ao número de Jogadas
+	xxxxxx++;
+	
+	// [EDITAR] Criar condição de vitória
+	if (numJogada == xxxxxx) {
+		alert('Parabéns você ganhou!!!');
+		draw(true);
+	}
+}
+
+document.addEventListener('keydown', handleKeyPress);
+
+</script>
+<br />
+ESQUERDA - VERDE <br />
+DIREITA - AZUL <br />
+ACIMA - VERMELHO <br />
+ABAIXO - PRETO
+
+</body>
+</html>
