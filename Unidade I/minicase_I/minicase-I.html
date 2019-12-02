@@ -60,9 +60,9 @@ function draw(flag) {
 
   for (var r = 0; r < 3; r++) 
 		for (var c = 0; c < 7; c++) {
-			if (flag) // [EDITAR] Se a flag for verdadeira, desenhar o que está específicado no mapa (mapa, linha, coluna)
+			if (flag) // [EDITAR] Se a flag for verdadeira, mostrar a sequencia desenhando as cores que estão na variável mapa
 				tile.desenhar(xxxxxx, xxxxxx, xxxxxx);	
-			else // [EDITAR] Senão, desenhar quadrado vermelho (vermelho, linha, coluna)
+			else // [EDITAR] Senão, esconder a sequencia desenhando todos os quadrados com a mesma cor
 				tile.desenhar(xxxxxx, xxxxxx, xxxxxx);
 		}
 }	
